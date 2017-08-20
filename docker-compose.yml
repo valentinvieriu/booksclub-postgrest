@@ -1,0 +1,20 @@
+version: '2.2'
+networks:
+  default:
+    external:
+      name: '${DOCKER_NETWORK}_default'
+services:
+    postgrest:
+      build: .
+      # image: '${REGISTRY_BASE_URL}/postgrest:4.2.0'
+      image: 'valentinvieriu/booksclub:postgrest-4.2.0'
+      expose: 
+        - 3000
+      ports: 
+        - '3000:3000'
+      environment: 
+        PGRST_DB_URI: 'postgres://${PGRST_DB_ANON_ROLE}:${POSTGRES_PASSWORD}@postgres:5432/booksclub'
+        PGRST_DB_SCHEMA: 'public'
+        PGRST_DB_ANON_ROLE: '${PGRST_DB_ANON_ROLE}'
+        PGRST_SERVER_PROXY_URL: 'https://bc-postgrest.${TLD}'
+        PGRST_JWT_SECRET: '${PGRST_JWT_SECRET}'
