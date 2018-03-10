@@ -5,9 +5,12 @@ networks:
       name: '${DOCKER_NETWORK}_default'
 services:
     postgrest:
-      build: .
-      # image: '${REGISTRY_BASE_URL}/postgrest:4.2.0'
-      image: 'valentinvieriu/booksclub:postgrest-4.2.0'
+      build: 
+        context: '.'
+        args: 
+          POSTGREST_VERSION: 'v0.4.4.0'
+      # image: '${REGISTRY_BASE_URL}/postgrest:4.4.0'
+      image: 'valentinvieriu/booksclub:postgrest-0.4.4.0'
       expose: 
         - 3000
       ports: 
@@ -18,3 +21,4 @@ services:
         PGRST_DB_ANON_ROLE: '${PGRST_DB_ANON_ROLE}'
         PGRST_SERVER_PROXY_URL: 'https://bc-postgrest.${TLD}'
         PGRST_JWT_SECRET: '${PGRST_JWT_SECRET}'
+        PGRST_JWT_AUD: '${PGRST_JWT_AUD}'
